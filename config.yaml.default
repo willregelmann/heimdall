@@ -2,6 +2,10 @@ server:
     port: 85
     authorized_clients:
         - '127.0.0.1'
-services:
-    git:
-        - '/opt/heimdall'
+    packages:
+        git:
+            - '/opt/heimdall'
+
+client:
+    hosts:
+	    - 'localhost'
