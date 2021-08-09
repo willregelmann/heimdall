@@ -18,7 +18,7 @@ except socket.error as e:
 s.listen(5)
 print('Listening...')
 def threaded_client(conn):
-    ingress = json.loads(conn.recv(102400).decode())
+    ingress = json.loads(conn.recv(16384).decode())
     if ingress['command'] in ['get', 'update']:
         egress = {}
         servicelist = [ingress['module']] if ingress['module'] else config['services'].keys()

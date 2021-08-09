@@ -18,19 +18,19 @@ if sys.argv[1] in ['get', 'update']:
                 'module': sys.argv[3] if len(sys.argv) >= 4 else None,
                 'package': sys.argv[4] if len(sys.argv) >= 5 else None
             }).encode())
-            data = json.loads(s.recv(102400).decode())
+            data = json.loads(s.recv(16384).decode())
             for module in data.keys():
                 for package in data[module]:
                     if sys.argv[1] == 'get':
                         if package['current'] == package['available']:
-                            print '\033[0;32m%s %s %s (%s)' % (host, module, package['name'], package['current'])
+                            print '\033[0;32m%s %s %s (%s)\033[0m' % (host, module, package['name'], package['current'])
                         else:
-                            print '\033[0;31m%s %s %s (%s => %s)' % (host, module, package['name'], package['current'], package['available'])
+                            print '\033[0;31m%s %s %s (%s => %s)\033[0m' % (host, module, package['name'], package['current'], package['available'])
                     elif sys.argv[1] == 'update':
                         if package['current'] == package['available']:
-                            print '\033[0;32mSUCCESS: %s %s %s (%s)' % (host, module, package['name'], package['current'])
+                            print '\033[0;32mSUCCESS: %s %s %s (%s)\033[0m' % (host, module, package['name'], package['current'])
                         else:
-                            print '\033[0;31mFAILURE: %s %s %s (%s => %s)' % (host, module, package['name'], package['current'], package['available'])
+                            print '\033[0;31mFAILURE: %s %s %s (%s => %s)\033[0m' % (host, module, package['name'], package['current'], package['available'])
         except socket.error as e:
             print '\033[0;31m%s is not available' % (host)
 
