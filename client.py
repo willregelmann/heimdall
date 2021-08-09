@@ -40,7 +40,7 @@ if sys.argv[1] in ['get', 'getall', 'update']:
                         else:
                             print '\033[0;31mFAILURE: %s %s %s (%s => %s)\033[0m' % (host, module, package['name'], package['current'], package['available'])
         except socket.error as e:
-            print '\033[0;31m%s is not available' % (host)
+            print '\033[0;31m%s is not available\033[0m' % (host)
 
 elif sys.argv[1] == 'update':
     pass
