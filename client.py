@@ -1,6 +1,6 @@
 import sys, socket, yaml, json
 
-config = yaml.safe_load(open('config.yaml', 'r').read())
+config = yaml.safe_load(open('config.yaml', 'r').read())['client']
 
 if len(sys.argv) == 1:
     print 'command must be provided'
