@@ -15,7 +15,7 @@ server:
     # packages to monitor, grouped by module
     packages:
         apt:
-            - '*'
+            - 'php*'
         git:
             - '/opt/heimdall'
             
@@ -33,5 +33,13 @@ client:
 - package: name of package (does not need to be specified in config.yaml)
 ### Example: List all packages for all configured hosts
 `python client.py get`
+```
+# python client.py get
+localhost git https://github.com/willregelmann/heimdall.git (f9cb5deaf8b971ad385427b4a456cbfba7024c14 => b87c655f609a70806a666c7c436ed26d898064a2)
+localhost apt php-common (2:84+0~20210621.36+debian10~1.gbp28513e)
+localhost apt php8.0-cli (8.0.9-1+0~20210730.22+debian10~1.gbp99e7e9)
+localhost apt php8.0-common (8.0.9-1+0~20210730.22+debian10~1.gbp99e7e9)
+localhost apt php8.0-curl (8.0.9-1+0~20210730.22+debian10~1.gbp99e7e9)
+```
 ### Example: Update php8.0 on localhost via apt
 `python client.py update localhost apt php8.0`
