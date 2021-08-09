@@ -6,7 +6,10 @@ Heimdall requires pyyaml:
 `pip install pyyaml`
 
 ## Configuration
+Heimdall expects a `config.yaml` file. Copy and modify `config.yaml.default` as needed
 ```
+#config.yaml
+
 server:
     port: 85
     # list of clients allowed to manage this server
