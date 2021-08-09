@@ -27,7 +27,7 @@ class apt:
         initial = self.get(name)
         Popen(['apt', 'update']).wait()
         print name
-        Popen(['apt', 'upgrade', '-y', name]).wait()
+        Popen(['apt', '--only-upgrade', 'install', '-y', name]).wait()
         final = self.get(name)
         for old in initial:
             if old['current'] == old['available']:
