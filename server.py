@@ -19,7 +19,7 @@ s.listen(5)
 print('Listening...')
 def threaded_client(conn):
     ingress = json.loads(conn.recv(2048).decode())
-    if ingress['command'] in ['get', 'update']:
+    if ingress['command'] in ['get', 'update', 'getall']:
         egress = {}
         modulelist = [ingress['module']] if ingress['module'] else config['packages'].keys()
         for module in modulelist:
@@ -27,7 +27,7 @@ def threaded_client(conn):
             egress[module] = []
             packagelist = [ingress['package']] if ingress['package'] else config['packages'][module]
             for package in packagelist:
-                if ingress['command'] == 'get':
+                if ingress['command'] in ['get', 'getall']:
                     egress[module].extend(service.get(package))
                 elif ingress['command'] == 'update':
                     egress[module].extend(service.update(package))
