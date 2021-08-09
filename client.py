@@ -17,7 +17,14 @@ if sys.argv[1] in ['get', 'update']:
                 'module': sys.argv[3] if len(sys.argv) >= 4 else None,
                 'package': sys.argv[4] if len(sys.argv) >= 5 else None
             }).encode())
-            data = json.loads(s.recv(102400).decode())
+            ingress = []
+            ingressbytes = 0
+            length = int(s.recv(32))
+            while ingressbytes < length:
+                chunk = s.recv(min(length - ingressbytes, 2048))
+                ingress.append(chunk)
+                ingressbytes += len(chunk)
+            data = json.loads(b''.join(ingress).decode())
             s.close()    
             for module in data.keys():
                 for package in data[module]:
