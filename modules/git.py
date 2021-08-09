@@ -22,5 +22,5 @@ class git:
         info = self.get(path)[0]
         if info['current'] == info['available']:
             return []
-        Popen(['git', '-C', path, 'pull']).wait()
+        Popen(['git', '-C', path, 'pull'], stdout=PIPE, stderr=PIPE).wait()
         return self.get(path)

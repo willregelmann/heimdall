@@ -25,9 +25,8 @@ class apt:
     def update(self, name):
         data = []
         initial = self.get(name)
-        Popen(['apt', 'update']).wait()
-        print name
-        Popen(['apt', '--only-upgrade', 'install', '-y', name]).wait()
+        Popen(['apt', 'update'], stdout=PIPE, stderr=PIPE).wait()
+        Popen(['apt', '--only-upgrade', 'install', '-y', name], stdout=PIPE, stderr=PIPE).wait()
         final = self.get(name)
         for old in initial:
             if old['current'] == old['available']:
