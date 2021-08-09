@@ -2,8 +2,6 @@ import sys, socket, yaml, json
 
 config = yaml.safe_load(open('config.yaml', 'r').read())
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 if len(sys.argv) == 1:
     print 'command must be provided'
     sys.exit()
@@ -12,6 +10,7 @@ if sys.argv[1] in ['get', 'update']:
     hostlist = [sys.argv[2]] if len(sys.argv) >= 3 else config['hosts']
     for host in hostlist:
         try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((host, 85))
             s.send(json.dumps({
                 'command': sys.argv[1],
@@ -19,6 +18,7 @@ if sys.argv[1] in ['get', 'update']:
                 'package': sys.argv[4] if len(sys.argv) >= 5 else None
             }).encode())
             data = json.loads(s.recv(102400).decode())
+            s.close()    
             for module in data.keys():
                 for package in data[module]:
                     if sys.argv[1] == 'get':
