@@ -7,8 +7,8 @@ config = yaml.safe_load(open('config.yaml', 'r').read())
 
 modules = {}
 
-for service in config['services'].keys():
-    modules[service] = importlib.import_module('modules.' + service)
+for module in config['packages'].keys():
+    modules[module] = importlib.import_module('modules.' + module)
 
 try:
     s.bind(('', config['server']['port']))
@@ -21,17 +21,17 @@ def threaded_client(conn):
     ingress = json.loads(conn.recv(2048).decode())
     if ingress['command'] in ['get', 'update']:
         egress = {}
-        servicelist = [ingress['module']] if ingress['module'] else config['services'].keys()
-        for service in servicelist:
-            srv = getattr(modules[service], service)()
-            egress[service] = []
-            packagelist = [ingress['package']] if ingress['package'] else config['services'][service]
+        modulelist = [ingress['module']] if ingress['module'] else config['packages'].keys()
+        for module in modulelist:
+            service = getattr(modules[module], module)()
+            egress[module] = []
+            packagelist = [ingress['package']] if ingress['package'] else config['packages'][module]
             for package in packagelist:
                 if ingress['command'] == 'get':
-                    egress[service].extend(srv.get(package))
+                    egress[module].extend(service.get(package))
                 elif ingress['command'] == 'update':
-                    egress[service].extend(srv.update(package))
-                    print 'updated %s: %s' % (service, package)
+                    egress[module].extend(service.update(package))
+                    print 'updated %s: %s' % (module, package)
         egressdata = json.dumps(egress).encode()
         egressbytes = 0
         conn.send(str(len(egressdata)).rjust(32, '0'))
