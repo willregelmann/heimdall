@@ -3,7 +3,7 @@ from thread import *
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-config = yaml.safe_load(open('config.yaml', 'r').read())
+config = yaml.safe_load(open('config.yaml', 'r').read())['server']
 
 modules = {}
 
