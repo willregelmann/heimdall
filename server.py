@@ -11,7 +11,7 @@ for module in config['packages'].keys():
     modules[module] = importlib.import_module('modules.' + module)
 
 try:
-    s.bind(('', config['server']['port']))
+    s.bind(('', config['port']))
 except socket.error as e:
     print(str(e))
 
@@ -43,7 +43,7 @@ def threaded_client(conn):
 while True:
     conn, addr = s.accept()
     print('connected to: '+addr[0]+':'+str(addr[1]))
-    if addr[0] in config['server']['authorized_clients']:
+    if addr[0] in config['authorized_clients']:
         start_new_thread(threaded_client,(conn,))
     else:
         conn.close
