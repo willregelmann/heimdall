@@ -1,0 +1,7 @@
+server:
+    port: 85
+    authorized_clients:
+        - '127.0.0.1'
+services:
+	apt:
+		- *
