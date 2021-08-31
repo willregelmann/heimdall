@@ -1,5 +1,5 @@
 # heimdall
-Modular Linux orchestration platform. This is how I'm learning Python; use at your own risk.
+Modular orchestration platform. This is how I'm learning Python; use at your own risk.
 
 ## Requirements
 Heimdall requires pyyaml:
